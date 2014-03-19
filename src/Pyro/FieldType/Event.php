@@ -62,10 +62,12 @@ class Event extends FieldTypeAbstract
         $options = $this->getOptions();
 
         if ($placeholder = $this->getParameter('filter_placeholder')) {
-            $options = array('-----' => $placeholder) + $options;
+            $placeholder = array('-----' => lang_label($placeholder));
+        } else {
+            $placeholder = array('-----' => lang('global:select-any'));
         }
 
-        return form_dropdown($this->getFilterSlug('is'), $options, $this->getFilterValue('is'));
+        return form_dropdown($this->getFilterSlug('is'), $placeholder + $options, $this->getFilterValue('is'));
     }
 
     /**
@@ -77,7 +79,7 @@ class Event extends FieldTypeAbstract
     {
         $options = array();
 
-        foreach (Events::registered() as $listener) {
+        foreach (\Events::registered() as $listener) {
             $options[$listener] = $listener;
         }
 
