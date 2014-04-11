@@ -49,7 +49,11 @@ class Event extends FieldTypeAbstract
      */
     public function formInput()
     {
-        return form_dropdown($this->formSlug, $this->getOptions(), $this->value);
+        $options = $this->getOptions();
+
+        ksort($options);
+
+        return form_dropdown($this->formSlug, $options, $this->value);
     }
 
     /**
